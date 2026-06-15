@@ -1,65 +1,51 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+"use client";
 
-export default function Home() {
+import React, { useState } from "react";
+import CircularNavigation from "@/components/CircularNavigation";
+import OnboardingForm from "@/components/OnboardingForm";
+import WellnessHub from "@/components/WellnessHub";
+import SmartInsights from "@/components/SmartInsights";
+import FutureSelf from "@/components/FutureSelf";
+import { motion, AnimatePresence } from "framer-motion";
+
+export default function Page() {
+  const [activeTab, setActiveTab] = useState("Onboarding");
+
+  const renderContent = () => {
+    switch (activeTab) {
+      case "Onboarding":
+        return <OnboardingForm key="onboarding" onComplete={() => setActiveTab("Wellness Hub")} />;
+      case "Wellness Hub":
+        return <WellnessHub key="wellness" />;
+      case "Smart Insights":
+        return <SmartInsights key="insights" />;
+      case "Future-Self":
+        return <FutureSelf key="future" />;
+      default:
+        return (
+          <motion.h1 
+            key={activeTab}
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.9 }}
+            className="text-5xl font-bold text-[#2F2E32]"
+          >
+            Hello, {activeTab}
+          </motion.h1>
+        );
+    }
+  };
+
   return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className={styles.intro}>
-          <h1>To get started, edit the page.js file.</h1>
-          <p>
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className={styles.secondary}
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
+    <div className="min-h-screen bg-[#F3F7F8] flex items-center justify-center relative overflow-hidden">
+      {/* Fixed Left Navigation */}
+      <CircularNavigation activeTab={activeTab} setActiveTab={setActiveTab} />
+
+      {/* Main Content Area */}
+      <main className="w-full flex justify-center py-6 md:py-10 px-4 md:px-20 mb-20 md:mb-0">
+        <AnimatePresence mode="wait">
+          {renderContent()}
+        </AnimatePresence>
       </main>
     </div>
   );
