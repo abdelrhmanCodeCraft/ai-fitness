@@ -141,7 +141,7 @@ export default function OnboardingForm({ onComplete }) {
                     <option value="Weight Loss">Weight Loss</option>
                     <option value="Fitness Improvement">Fitness Improvement</option>
                   </select>
-                  <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" size={16} />
+                  {/* <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" size={16} /> */}
                 </div>
                 <ErrorLabel error={errors.fitnessGoal} />
               </div>
